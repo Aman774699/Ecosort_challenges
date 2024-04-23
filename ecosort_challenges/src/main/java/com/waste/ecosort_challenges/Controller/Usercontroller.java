@@ -1,7 +1,9 @@
 package com.waste.ecosort_challenges.Controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,35 +18,36 @@ import jakarta.validation.Valid;
 
 @Controller
 public class Usercontroller {
-    
+
     @Autowired
     private UserRepository UserRepository;
-    
+
+    @Autowired
+    private BCryptPasswordEncoder passwordencode;
+
     @GetMapping("/userRegistration")
-    public String userRegistration()
-    {
-        return "Users/Registration";
+    public String userRegistration() {
+        return "Users/New_Registration";
     }
 
-    
     @PostMapping("/registration")
-    public ResponseEntity<RedirectView> postUserData(@Valid @ModelAttribute("user") User user,BindingResult result)
-    {
-        
-       try{
-        if(result.hasErrors())
-        {
+    public ResponseEntity<RedirectView> postUserData(@Valid @ModelAttribute("user") User user, BindingResult result) {
+
+        try {
+            if (result.hasErrors()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            user.setPassword(passwordencode.encode(user.getPassword()));
+            user.setConformPassword(passwordencode.encode(user.getConformPassword()));
+            User add = this.UserRepository.save(user);
+            RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("Users/RegistrationSuccess.html");
+            return ResponseEntity.ok(redirectView);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-          User add=this.UserRepository.save(user);
-          RedirectView redirectView=new RedirectView();
-          redirectView.setUrl("/Users/RegistrationSuccess.html");
-          return ResponseEntity.ok(redirectView);
-       }
-       catch(Exception e)
-       {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-       }    
     }
+
 }
