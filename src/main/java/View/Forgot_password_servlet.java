@@ -67,7 +67,7 @@ public class Forgot_password_servlet extends HttpServlet {
                 Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("vishwakarmaaman922@gmail.com", "zfbovlohpndugchr");
+                        return new PasswordAuthentication("your mail", "your passkey");
                     }
                 });
                 try {
