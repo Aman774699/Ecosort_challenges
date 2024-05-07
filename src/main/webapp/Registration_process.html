@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="Login$Registration.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                background-image: url('Media/Home.png');
+                background-size: cover;
+
+                /*background-position: center center*/
+                /*background-position: center left;*/
+                background-position:  200px center;
+                margin: 0;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .container {
+                width: 70%;
+                max-height: 540px;
+                max-width: 500px;
+                margin-left: 70px;
+                margin-top: -123px
+            }
+
+            .card {
+                border-radius: 1rem;
+            }
+            .bg-white {
+                background-color: #e6dede!important;
+            }
+            .element.style {
+                border-radius: 15px;
+                background-color: #e6dede!important;
+            }
+            img, svg {
+                vertical-align: middle;
+                border-radius: 1.45rem;
+                width: 35%;
+            }
+        </style>
+        <script>
+            function myfun() {
+
+                var emailInput = document.getElementsByName("EMAIL")[0].value;
+
+                if (!emailInput.toLowerCase().endsWith('@gmail.com')) {
+                    alert('Please enter a valid Gmail address.');
+                    return false; // Prevent form submission
+                }
+                return true;
+            }
+            function validatePassword() {
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirmPassword").value;
+                var passwordStrength = document.getElementById("passwordStrength");
+
+                // Regular expressions to check for uppercase, lowercase, numeric, and special characters
+                var upperCase = /[A-Z]/g;
+                var lowerCase = /[a-z]/g;
+                var numbers = /[0-9]/g;
+                var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+                // Check if the password meets the criteria
+                var isStrong = password.length >= 8 && password.match(upperCase) && password.match(lowerCase) && password.match(numbers) && password.match(specialChars);
+
+                if (!isStrong) {
+                    passwordStrength.innerHTML = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+                    passwordStrength.style.color = "red";
+                } else {
+                    passwordStrength.innerHTML = "";
+                }
+
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    document.getElementById("confirmPasswordError").innerHTML = "Passwords do not match.";
+                } else {
+                    document.getElementById("confirmPasswordError").innerHTML = "";
+                }
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card background-image" style="border-radius: 15px; background-color: #e6dede!important;">
+                            <div class="card-body p-4">
+                                <h2 class="text-uppercase text-center mb-3 mt-3 text-primary">
+                                    <img src="Media/Ecosort_updated.png" width="100px" height="50px"></h2>
+
+                                <form method="post" action="New_Registration_Authentication" onsubmit="return myfun();">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="form3Example1cg">Your Full Name</label>
+                                        <input pattern="^.* .*$" required type="text" name="FULLNAME"
+                                               class="form-control form-control-lg" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="form3Example3cg" required>Your Email</label>
+                                        <input required type="email" name="EMAIL" class="form-control form-control-lg" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="form3Example3cg" required>Your Mobile No.</label>
+                                        <input pattern="[789][0-9]{9}" required type="text" name="MOBILE_NO"
+                                               class="form-control form-control-lg" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Gender</label>
+                                        <select name="GENDER" required class="form-control form-control-lg">
+                                            <option value="">Select..</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input minlength="8" required type="password" id="password" name="PASSWORD" class="form-control form-control-lg" onkeyup="validatePassword()" />
+                                        <div id="passwordStrength" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="confirmPassword">Repeat your password</label>
+                                        <input minlength="8" required type="password" id="confirmPassword" name="CONFIRM_PASSWORD"
+                                               class="form-control form-control-lg" onkeyup="validatePassword()" />
+                                        <div id="confirmPasswordError" class="form-text" style="color: red;"></div>
+                                    </div>
+
+                                    <div id="errorMessages" class="error-message" style="color: red;"></div>
+
+                                    <div class="form-check d-flex justify-content-center mb-3">
+                                        <input required class="form-check-input me-2" type="checkbox" value=""
+                                               id="form2Example3cg" />
+                                        <label class="form-check-label" for="form2Example3g">
+                                            I agree to all statements in <a href="#!" class="text-body"><u>Terms of
+                                                    service</u></a>
+                                        </label>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit"
+                                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body ">Register</button>
+                                    </div>
+
+                                    <p class="text-center text-muted mt-3 mb-0">Already have an account? <a href="index.html"
+                                                                                                            class="fw-bold text-body"><u>Login here</u></a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
